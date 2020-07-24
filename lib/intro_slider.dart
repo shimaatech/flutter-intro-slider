@@ -139,8 +139,6 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide status bar
   final bool shouldHideStatusBar;
 
-  final ShowCallback shouldShowNextDoneButton;
-
   // Constructor
   IntroSlider({
     // Slides
@@ -199,7 +197,6 @@ class IntroSlider extends StatefulWidget {
     // Behavior
     this.isScrollable,
     this.shouldHideStatusBar,
-    this.shouldShowNextDoneButton,
   });
 
   @override
@@ -261,8 +258,6 @@ class IntroSlider extends StatefulWidget {
       // Behavior
       isScrollable: this.isScrollable,
       shouldHideStatusBar: this.shouldHideStatusBar,
-
-      shouldShowNextDoneButton: this.shouldShowNextDoneButton,
     );
   }
 }
@@ -409,8 +404,6 @@ class IntroSliderState extends State<IntroSlider>
   /// Show or hide status bar
   bool shouldHideStatusBar;
 
-  ShowCallback shouldShowNextDoneButton;
-
   // Constructor
   IntroSliderState({
     // List slides
@@ -469,7 +462,6 @@ class IntroSliderState extends State<IntroSlider>
     // Behavior
     @required this.isScrollable,
     @required this.shouldHideStatusBar,
-    @required this.shouldShowNextDoneButton,
   });
 
   TabController tabController;
@@ -500,7 +492,7 @@ class IntroSliderState extends State<IntroSlider>
       }
       currentAnimationValue = tabController.animation.value;
       if (this.onTabChangeCompleted != null) {
-        this.onTabChangeCompleted(tabController.previousIndex, tabController.index);
+        this.onTabChangeCompleted(tabController.index);
       }
     });
 
@@ -651,7 +643,7 @@ class IntroSliderState extends State<IntroSlider>
     }
 
     // Prev button
-    if (isShowPrevBtn == null || isShowSkipBtn) {
+    if (isShowPrevBtn == null) {
       isShowPrevBtn = false;
     }
     if (styleNamePrevBtn == null) {
@@ -891,14 +883,10 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             alignment: Alignment.center,
             child: tabController.index + 1 == slides.length
-                ? isShowDoneBtn &&
-                        (shouldShowNextDoneButton == null ||
-                            shouldShowNextDoneButton(currentTabIndex))
+                ? isShowDoneBtn
                     ? buildDoneButton()
                     : Container()
-                : isShowNextBtn &&
-                        (shouldShowNextDoneButton == null ||
-                            shouldShowNextDoneButton(currentTabIndex))
+                : isShowNextBtn
                     ? buildNextButton()
                     : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
