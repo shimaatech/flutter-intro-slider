@@ -5,6 +5,8 @@ import 'dot_animation_enum.dart';
 import 'list_rtl_language.dart';
 import 'slide_object.dart';
 
+typedef ShowCallback = bool Function(int tabIndex);
+
 class IntroSlider extends StatefulWidget {
   // ---------- Slides ----------
   /// An array of Slide object
@@ -137,6 +139,8 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide status bar
   final bool shouldHideStatusBar;
 
+  final ShowCallback shouldShowNextDoneButton;
+
   // Constructor
   IntroSlider({
     // Slides
@@ -195,6 +199,7 @@ class IntroSlider extends StatefulWidget {
     // Behavior
     this.isScrollable,
     this.shouldHideStatusBar,
+    this.shouldShowNextDoneButton,
   });
 
   @override
@@ -256,6 +261,8 @@ class IntroSlider extends StatefulWidget {
       // Behavior
       isScrollable: this.isScrollable,
       shouldHideStatusBar: this.shouldHideStatusBar,
+
+      shouldShowNextDoneButton: this.shouldShowNextDoneButton,
     );
   }
 }
@@ -402,6 +409,8 @@ class IntroSliderState extends State<IntroSlider>
   /// Show or hide status bar
   bool shouldHideStatusBar;
 
+  ShowCallback shouldShowNextDoneButton;
+
   // Constructor
   IntroSliderState({
     // List slides
@@ -460,6 +469,7 @@ class IntroSliderState extends State<IntroSlider>
     // Behavior
     @required this.isScrollable,
     @required this.shouldHideStatusBar,
+    @required this.shouldShowNextDoneButton,
   });
 
   TabController tabController;
@@ -828,7 +838,7 @@ class IntroSliderState extends State<IntroSlider>
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: isShowSkipBtn
+            child: isShowSkipBtn && currentTabIndex == 0
                 ? buildSkipButton()
                 : (isShowPrevBtn ? buildPrevButton() : Container()),
             width: isShowSkipBtn
@@ -881,8 +891,16 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             alignment: Alignment.center,
             child: tabController.index + 1 == slides.length
-                ? isShowDoneBtn ? buildDoneButton() : Container()
-                : isShowNextBtn ? buildNextButton() : Container(),
+                ? isShowDoneBtn &&
+                        (shouldShowNextDoneButton == null ||
+                            shouldShowNextDoneButton(currentTabIndex))
+                    ? buildDoneButton()
+                    : Container()
+                : isShowNextBtn &&
+                        (shouldShowNextDoneButton == null ||
+                            shouldShowNextDoneButton(currentTabIndex))
+                    ? buildNextButton()
+                    : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
             height: 50,
           ),
