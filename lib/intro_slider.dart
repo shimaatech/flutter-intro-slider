@@ -748,12 +748,14 @@ class IntroSliderState extends State<IntroSlider>
         length: slides.length,
         child: Stack(
           children: <Widget>[
-            TabBarView(
-              children: tabs,
-              controller: tabController,
-              physics: isScrollable
-                  ? ScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
+            Expanded(
+              child: TabBarView(
+                children: tabs,
+                controller: tabController,
+                physics: isScrollable
+                    ? ScrollPhysics()
+                    : NeverScrollableScrollPhysics(),
+              ),
             ),
             renderBottom(),
           ],
