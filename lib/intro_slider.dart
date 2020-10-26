@@ -1007,6 +1007,7 @@ class IntroSliderState extends State<IntroSlider>
       child: Container(
         margin: EdgeInsets.only(bottom: 60.0),
         child: ListView(
+          physics: NeverScrollableScrollPhysics(),  
           children: <Widget>[
             Container(
               // Title
