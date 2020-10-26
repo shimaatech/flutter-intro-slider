@@ -1006,8 +1006,7 @@ class IntroSliderState extends State<IntroSlider>
             ),
       child: Container(
         margin: EdgeInsets.only(bottom: 60.0),
-        child: ListView(
-          physics: NeverScrollableScrollPhysics(),  
+        child: Column(
           children: <Widget>[
             Container(
               // Title
@@ -1038,7 +1037,7 @@ class IntroSliderState extends State<IntroSlider>
                       height: heightImage ?? 200.0,
                       fit: foregroundImageFit ?? BoxFit.contain,
                     )
-                  : Center(child: centerWidget ?? Container()),
+                  : Expanded(child: Center(child: centerWidget ?? Container())),
               onTap: onCenterItemPress,
             ),
 
