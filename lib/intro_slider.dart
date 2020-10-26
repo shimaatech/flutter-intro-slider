@@ -978,32 +978,18 @@ class IntroSliderState extends State<IntroSlider>
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: backgroundImage != null
-          ? BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(backgroundImage),
-                fit: backgroundImageFit ?? BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  backgroundOpacityColor != null
-                      ? backgroundOpacityColor
-                          .withOpacity(backgroundOpacity ?? 0.5)
-                      : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
-                  backgroundBlendMode ?? BlendMode.darken,
-                ),
-              ),
-            )
-          : BoxDecoration(
-              gradient: LinearGradient(
-                colors: backgroundColor != null
-                    ? [backgroundColor, backgroundColor]
-                    : [
-                        colorBegin ?? Colors.amberAccent,
-                        colorEnd ?? Colors.amberAccent
-                      ],
-                begin: directionColorBegin ?? Alignment.topLeft,
-                end: directionColorEnd ?? Alignment.bottomRight,
-              ),
-            ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: backgroundColor != null
+              ? [backgroundColor, backgroundColor]
+              : [
+                  colorBegin ?? Colors.amberAccent,
+                  colorEnd ?? Colors.amberAccent
+                ],
+          begin: directionColorBegin ?? Alignment.topLeft,
+          end: directionColorEnd ?? Alignment.bottomRight,
+        ),
+      ),
       child: Container(
         margin: EdgeInsets.only(bottom: 60.0),
         child: Column(
@@ -1029,16 +1015,18 @@ class IntroSliderState extends State<IntroSlider>
             ),
 
             // Image or Center widget
-            GestureDetector(
-              child: pathImage != null
-                  ? Image.asset(
-                      pathImage,
-                      width: widthImage ?? 200.0,
-                      height: heightImage ?? 200.0,
-                      fit: foregroundImageFit ?? BoxFit.contain,
-                    )
-                  : Expanded(child: Center(child: centerWidget ?? Container())),
-              onTap: onCenterItemPress,
+            Expanded(
+              child: GestureDetector(
+                child: pathImage != null
+                    ? Image.asset(
+                        pathImage,
+                        width: widthImage ?? 200.0,
+                        height: heightImage ?? 200.0,
+                        fit: foregroundImageFit ?? BoxFit.contain,
+                      )
+                    : Center(child: centerWidget ?? Container()),
+                onTap: onCenterItemPress,
+              ),
             ),
 
             // Description
