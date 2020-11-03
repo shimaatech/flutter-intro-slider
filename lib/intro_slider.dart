@@ -748,14 +748,12 @@ class IntroSliderState extends State<IntroSlider>
         length: slides.length,
         child: Stack(
           children: <Widget>[
-            Expanded(
-              child: TabBarView(
-                children: tabs,
-                controller: tabController,
-                physics: isScrollable
-                    ? ScrollPhysics()
-                    : NeverScrollableScrollPhysics(),
-              ),
+            TabBarView(
+              children: tabs,
+              controller: tabController,
+              physics: isScrollable
+                  ? ScrollPhysics()
+                  : NeverScrollableScrollPhysics(),
             ),
             renderBottom(),
           ],
@@ -1017,18 +1015,16 @@ class IntroSliderState extends State<IntroSlider>
             ),
 
             // Image or Center widget
-            Expanded(
-              child: GestureDetector(
-                child: pathImage != null
-                    ? Image.asset(
-                        pathImage,
-                        width: widthImage ?? 200.0,
-                        height: heightImage ?? 200.0,
-                        fit: foregroundImageFit ?? BoxFit.contain,
-                      )
-                    : Center(child: centerWidget ?? Container()),
-                onTap: onCenterItemPress,
-              ),
+            GestureDetector(
+              child: pathImage != null
+                  ? Image.asset(
+                      pathImage,
+                      width: widthImage ?? 200.0,
+                      height: heightImage ?? 200.0,
+                      fit: foregroundImageFit ?? BoxFit.contain,
+                    )
+                  : Center(child: centerWidget ?? Container()),
+              onTap: onCenterItemPress,
             ),
 
             // Description
