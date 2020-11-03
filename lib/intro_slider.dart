@@ -1016,21 +1016,16 @@ class IntroSliderState extends State<IntroSlider>
 
             // Image or Center widget
             Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  GestureDetector(
-                    child: pathImage != null
-                        ? Image.asset(
-                            pathImage,
-                            width: widthImage ?? 200.0,
-                            height: heightImage ?? 200.0,
-                            fit: foregroundImageFit ?? BoxFit.contain,
-                          )
-                        : Center(child: centerWidget ?? Container()),
-                    onTap: onCenterItemPress,
-                  ),
-                ],
+              child: GestureDetector(
+                child: pathImage != null
+                    ? Image.asset(
+                        pathImage,
+                        width: widthImage ?? 200.0,
+                        height: heightImage ?? 200.0,
+                        fit: foregroundImageFit ?? BoxFit.contain,
+                      )
+                    : Center(child: centerWidget ?? Container()),
+                onTap: onCenterItemPress,
               ),
             ),
 
